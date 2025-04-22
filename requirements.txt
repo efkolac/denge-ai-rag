@@ -5,3 +5,4 @@ sentence-transformers==2.2.2
 accelerate==0.25.0
 pypdf>=3.0.0  
 sentence-transformers
+runpod>=0.9.0
