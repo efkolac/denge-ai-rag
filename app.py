@@ -25,30 +25,37 @@ load_dotenv()
 hf_token = os.getenv("HF_TOKEN")
 
 def download_model():
-    """Download the model with retries and progress tracking"""
+    """Download the model with retries"""
     try:
-        # Create fresh directory
         if LOCAL_MODEL_DIR.exists():
             shutil.rmtree(LOCAL_MODEL_DIR)
         LOCAL_MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"Downloading {MODEL_REPO} to {LOCAL_MODEL_DIR}...")
-
-        # Use snapshot_download for more reliable downloads
-        snapshot_download(
-            repo_id=MODEL_REPO,
-            local_dir=LOCAL_MODEL_DIR,
-            local_dir_use_symlinks=False,
-            resume_download=True,
-            allow_patterns=["*.json", "*.model", "*.safetensors", "*.bin", "*.txt"],
-            ignore_patterns=["*.h5", "*.ot", "*.tflite"],
-            max_workers=4,
-            token=hf_token
-        )
-
-        logger.info("Download complete!")
+        logger.info(f"Downloading {MODEL_REPO}...")
+        
+        # Download essential files
+        required_files = [
+            "config.json",
+            "model.safetensors",
+            "tokenizer.json",
+            "tokenizer_config.json",
+            "special_tokens_map.json",
+            "generation_config.json"
+        ]
+        
+        for file in required_files:
+            try:
+                hf_hub_download(
+                    repo_id=MODEL_REPO,
+                    filename=file,
+                    local_dir=LOCAL_MODEL_DIR,
+                    resume_download=True,
+                    token=hf_token
+                )
+            except Exception as e:
+                logger.warning(f"Couldn't download {file}: {str(e)}")
+                
         return LOCAL_MODEL_DIR
-
     except Exception as e:
         logger.error(f"Download failed: {e}")
         raise
