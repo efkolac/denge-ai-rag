@@ -1,0 +1,16 @@
+Today I have completed api regarding sms updates. There were also parts to update in mobile application. I have connected login, expire password, temporary password, sms verification logic all together. Meaning both in api and in application they will act i similar manner.
+
+For web part we have added a check that will check if user has failed to enter correct sms code more than 30 times. If he does, his account is suspended. In case that this happens and customer rep comes to us, we will change a record from verificationlogs table, failedenterattempt code to 0.
+
+We have decided that if users password is expired or has temporary password, we are not asking sms verificaiton again.
+
+Enums that used for Loginverification table type column are as follows
+LogCreated = 1,
+SMSSended = 2,
+SMSSendError = 3,
+SMSExp = 4,
+SMSConfirmed = 5,
+MaxErrorsCount = 6,
+MaxFailedSMSAttemptCount = 7
+
+

@@ -1,0 +1,2 @@
+Terminal app
+If users of terminal application are complain about upon reading barcode or order through barcode, it gives not found error like 7 not found, 1 not found, each single letters. Problem is likely that app is first time installed on device and its barcode reader needs to be calibrated. So it is most likely would only occur on first time installations. Solutions is changing terminals keystroke interval to 0ms.

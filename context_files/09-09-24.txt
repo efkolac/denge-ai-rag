@@ -1,0 +1,4 @@
+Flutter project kept giving package not supported error. I remembered that i upgraded all of them from command line. So there were cases that some packages were not compatible.
+First i tried to downgrade flutter but it didnt work, so i went back on my git to get old versions of packages that i remembered last time they work. After flutter clean, it worked with flutter pub get.
+
+There was an error with our technical departmant was unable to print documents that called irsaliye. After debugging current projects i noticed that my coworker committed a git that changed one of my entitites data type. After I reverted it, it worked. But then i commited that change and I change the code that entity uses. Problem was data type became non nullable to nullable so when tostring method was being used it gave no such method available. I turned them into variable.value.tostring()

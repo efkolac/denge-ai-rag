@@ -1,0 +1,1 @@
+When i deploy my .net app to remote IIS server elasticsearch logs were not apeear on the logs file. I solved it by givin write permission to IIS_User in my IIS server project from edit permissions -> security

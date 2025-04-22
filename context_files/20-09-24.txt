@@ -1,0 +1,3 @@
+We determine wheter user logged in with sms authentication by looking up to loginverification logs using userid, most recent log must have state of 5 (verified by sms). User id can be obtained from user table. 
+
+While deploying terminal api, i realised that out web socket was not working, after searching internet, i found out that i need to install websocket protocal from server manager

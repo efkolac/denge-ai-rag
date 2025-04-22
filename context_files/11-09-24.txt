@@ -1,0 +1,4 @@
+One of our finance rep named hakan, left the company. So customers that he had changed from tiger2..clcard, from ahk to bug(abbv. for bugra). But in our ERP site, table named DengeREP.dbo.rep_FinansGorusme has finance reps, so when we move customers from one rep to another, we also have to change this column to new rep.
+
+while updating mobile app, we change pubspec.yaml file and android/app/build.gradle file to appropirate app version. We also update api version on globals.dart to revelant version that we have decided on api part
+

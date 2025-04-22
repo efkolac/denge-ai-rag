@@ -1,0 +1,1 @@
+After failure on our servers, we restarted all servers and ncache was working but was not available from IIS servers. After we recycle our main projects, b2b, ERP and CRM they worked again

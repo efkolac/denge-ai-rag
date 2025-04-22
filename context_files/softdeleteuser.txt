@@ -1,0 +1,1 @@
+To soft delete user, we change its users table values to isactive = 0, isapproved = 0, islocked = 1

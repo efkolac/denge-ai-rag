@@ -1,0 +1,1 @@
+bizim bir tane terminal uygulamamız var ve bu uygulamada kullanıcıları doğruluk tespitini cihazlarında bulunan versiyonu veritabanımıza kaydederek buluyoruz

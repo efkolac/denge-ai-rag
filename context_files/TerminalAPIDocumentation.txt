@@ -1,0 +1,12 @@
+Terminal API is our back end application that communicates with our android application to show orders, order details, checkout orders, change order information, stock status.
+It provides all the required services for our terminal mobile application to run.
+These are the main components of our API
+
+Authentication
+We do not have authentication page for terminal app. Instead we register their android Id to dengerep.dbo.elusers table. Every time user opens app we look for devices id and table value. That is all we use to register user to system. So if user cannot log in to system, logs that located at our project folder at IIS, can be investigated to look for users device id (we log unauthorized logins with their device id) and saved to elusers tables DeviceId column. Upon not being able to log in to applicaton, users phone would be stuck at splash page, which is just blue screen with our denge logo
+
+Authorization
+We currently have 3 tiers of authorization, user, veteran user, manager and admin. Their roles are not yet definitive. We plan to give manager some privileges that will solve conflicts before they reach to us.
+
+
+

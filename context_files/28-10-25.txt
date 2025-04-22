@@ -1,0 +1,1 @@
+we have device based authentication on out terminal application. So if android device id is not registered in our dengerep..eluser table, user will not be able to authenticate to device

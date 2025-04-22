@@ -1,0 +1,65 @@
+this is our companies table
+
+USE [DengeB2B]
+GO
+
+/****** Object:  Table [dbo].[Companies]    Script Date: 14/10/2024 10:58:58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Companies](
+	[CompanyId] [int] NOT NULL,
+	[CariCode] [varchar](17) NOT NULL,
+	[Unvan] [varchar](256) NOT NULL,
+	[MusteriTemsilcisi] [varchar](32) NULL,
+	[TelNo1] [varchar](64) NULL,
+	[TelNo2] [varchar](64) NULL,
+	[FaxNo] [varchar](64) NULL,
+	[Adres1] [varchar](500) NULL,
+	[Adres2] [varchar](500) NULL,
+	[Semt] [varchar](128) NULL,
+	[Ilce] [varchar](128) NULL,
+	[Sehir] [varchar](252) NULL,
+	[Ulke] [varchar](32) NULL,
+	[PostaKodu] [varchar](11) NULL,
+	[VergiNo] [varchar](16) NULL,
+	[VergiDairesi] [varchar](32) NULL,
+	[PaymentRef] [int] NULL,
+	[Valor] [varchar](32) NULL,
+	[HesapDovizCalismaTipi] [varchar](32) NULL,
+	[HesapTakipDovizTuru] [smallint] NULL,
+	[DovizKodu] [nvarchar](8) NULL,
+	[DovizAdi] [nvarchar](64) NULL,
+	[Vadesi] [varchar](32) NULL,
+	[GonderimTuru] [varchar](16) NULL,
+	[TasimaYontemi] [varchar](16) NULL,
+	[TicaretTuru] [varchar](32) NULL,
+	[KrediKartliOdeme] [bit] NULL,
+	[CompanyType] [int] NULL,
+	[IsAktiv] [bit] NULL,
+	[MuhasebeKodu] [varchar](20) NULL,
+	[FarkliAdresSevk] [bit] NULL,
+	[FinansTemsilcisi] [varchar](50) NULL,
+	[WebAdresi] [nvarchar](164) NULL,
+	[LogoUrl] [nvarchar](150) NULL,
+	[PopupState] [int] NULL,
+	[ProvizyonOdeme] [bit] NULL,
+	[XmlErisim] [bit] NULL,
+	[PaymentType] [int] NULL,
+	[EFaturaMail] [nvarchar](250) NULL,
+	[Accepteinv] [smallint] NULL,
+	[IsCampaign] [bit] NOT NULL,
+	[KanalTemsilcisi] [nvarchar](50) NULL,
+	[IsTestCompany] [bit] NULL,
+	[CompanyValorCurrencyId] [int] NULL,
+ CONSTRAINT [PK_Companies] PRIMARY KEY CLUSTERED 
+(
+	[CompanyId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

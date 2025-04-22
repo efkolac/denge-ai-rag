@@ -1,0 +1,1 @@
+After creating Finance rep, other users were not able to see that's rep's companies, so using tiger sys UI, we went for for -> gruplar then under the desired finance rep and current company, we changed which departmants can see that finance reps companies.

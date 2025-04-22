@@ -1,0 +1,1 @@
+common causes for dispatch printing errors can be monitored from terminalcreateinvoice table that located in dengerep db. If most recent records have state 5 instead of state 7, it means something is wrong in shipment project

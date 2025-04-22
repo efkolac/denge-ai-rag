@@ -1,0 +1,6 @@
+User was not able to create a different shipment address. First we wanted him to sign the different shipment aggrement. After it was mailed to us, we updated companies status from erp -> bayi işlemleri -> farklı sevk to true
+
+For terminal application we store api token locally, if there are no token or it expired we request from api. We check for expiration in http interceptor.
+
+For orders that have cargo as deliverytype, we pay the cargo price, if it is over 150 dolar. If it is under 150 dolar we ask customer to wheter add cargo price to order or send order with customer paid order.
+If order is delivered by us, we have 50 dolar order price to deliver

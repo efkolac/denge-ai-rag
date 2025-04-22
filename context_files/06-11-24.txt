@@ -1,0 +1,1 @@
+we got "Sipariş satırı sevk edilebilir değil" error while our terminals processing invoices via tiger, logo. Our solution was to change its approval status back and forth and tried to processs it again. This time it worked

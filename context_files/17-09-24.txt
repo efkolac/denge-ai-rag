@@ -1,0 +1,1 @@
+we had error claiming there were an error about billing. After learning two person tried to change items at the same time i dedicded to run billing service again by command update DengeREP..TerminalCreateInvoice set LogoErrorMe = null,State = 4,FaturaNo = null,LogoSuccessMe = null where FishNo = '2034074865' 

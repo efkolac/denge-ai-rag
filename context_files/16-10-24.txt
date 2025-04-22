@@ -1,0 +1,1 @@
+Today I have modify how our terminal mobile application behaves with websocket. In homepage it is subscribed to sale counts and in sale orders it is subscribed to more in debt sale order list. App starts with subscribed to homepage and when navigated to sale orders page, it stop listening homepage and only listens sale orders details.  

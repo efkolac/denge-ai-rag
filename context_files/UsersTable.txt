@@ -1,0 +1,62 @@
+this is our users table
+USE [DengeB2B]
+GO
+
+/****** Object:  Table [dbo].[Users]    Script Date: 14/10/2024 10:57:41 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Users](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CariCode] [varchar](17) NULL,
+	[CompanyId] [int] NULL,
+	[Name] [nvarchar](64) NOT NULL,
+	[Surname] [nvarchar](64) NOT NULL,
+	[Email] [varchar](200) NOT NULL,
+	[PasswordHash] [varchar](64) NOT NULL,
+	[PassExDateTime] [datetime] NULL,
+	[PassChangeApprovHashCode] [varchar](64) NULL,
+	[FailedAppHashAttemptCount] [int] NULL,
+	[PassType] [int] NULL,
+	[PassSecretKeyVersion] [int] NULL,
+	[FailedPasswordAttemptCount] [int] NOT NULL,
+	[IsApproved] [bit] NOT NULL,
+	[IsLockedOut] [bit] NOT NULL,
+	[LastLoginDate] [datetime] NULL,
+	[Count] [int] NULL,
+	[UserGroupId] [int] NOT NULL,
+	[State] [varchar](200) NULL,
+	[MusteriTemsilcisiKodu] [varchar](32) NULL,
+	[TelNo1] [varchar](64) NULL,
+	[TelNo2] [varchar](64) NULL,
+	[EndUserAverage] [decimal](10, 2) NOT NULL,
+	[OnlineLoginDateTime] [datetime] NULL,
+	[NotificationTrue] [bit] NULL,
+	[DuyuruMail] [bit] NULL,
+	[CCEmails] [nvarchar](1500) NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[UpdateDateTime] [nchar](10) NULL,
+	[IsActive] [bit] NULL,
+	[New] [bit] NULL,
+	[ExpPassCount] [int] NULL,
+	[CCUserId] [int] NULL,
+	[IsPhoneVerified] [bit] NULL,
+	[SmsType] [int] NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Companies] FOREIGN KEY([CompanyId])
+REFERENCES [dbo].[Companies] ([CompanyId])
+GO
+
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Companies]
+GO
+
+

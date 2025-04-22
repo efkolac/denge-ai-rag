@@ -1,0 +1,1 @@
+Today I am trying to publish new version of our mobile appliacation to both google store and app store. There were some bugs in production ready product, so I am working on it

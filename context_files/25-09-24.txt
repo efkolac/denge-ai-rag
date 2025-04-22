@@ -1,0 +1,1 @@
+If order is locked in one user and other user cant access due to warning this order is opened in another user,   delete [DengeREP].[dbo].[CRM_SiparisKilit]  where ReferanceId= enterlogicalrefhere can be used, where ReferanceId is logical ref in orfiche table

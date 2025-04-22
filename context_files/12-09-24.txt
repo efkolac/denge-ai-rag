@@ -1,0 +1,1 @@
+we have decided to disable admin users from changing their phone numbers. Because some ill intended person can change it to their own number and then they can verify their number and use our B2B site as they please. Phone changing auhorization will be assigned to Nuray Hanım or sales representative person

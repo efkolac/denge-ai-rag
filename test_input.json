@@ -1,0 +1,7 @@
+{
+  "input": {
+    "prompt": "create a mssql query that will soft delete user with email emre.kolac@denge.com.tr?",
+    "context": "youre helpful assistant",
+    "max_length": 4000
+  }
+}
