@@ -40,7 +40,8 @@ def download_model():
             resume_download=True,
             allow_patterns=["*.json", "*.model", "*.safetensors", "*.bin", "*.txt"],
             ignore_patterns=["*.h5", "*.ot", "*.tflite"],
-            max_workers=4
+            max_workers=4,
+            token=hf_token
         )
 
         logger.info("Download complete!")
