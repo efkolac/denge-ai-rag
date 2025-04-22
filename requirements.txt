@@ -4,3 +4,4 @@ torch==2.1.2
 sentence-transformers==2.2.2
 accelerate==0.25.0
 pypdf>=3.0.0  
+sentence-transformers
