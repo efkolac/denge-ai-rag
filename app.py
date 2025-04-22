@@ -12,9 +12,9 @@ from dotenv import load_dotenv
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # Model configuration
-MODEL_REPO = "meta-llama/Llama-3.3-70B-Instruct"
+MODEL_REPO = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
-LOCAL_MODEL_DIR = MODEL_DIR / "meta-llama/Llama-3.3-70B-Instruct"
+LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 
 tokenizer = None
 model = None
@@ -78,6 +78,7 @@ def load_model():
         )
         
         logger.info(f"Model loaded on {model.device}")
+        logger.info(hf_token)
         return True
 
     except Exception as e:
@@ -159,7 +160,7 @@ def handler(event):
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
         response = response.split("[/INST]")[-1].strip()
         
-        return {"response": f"{filecount} {response}"}
+        return {"response": f"{hf_token} {response}"}
     
     except torch.cuda.OutOfMemoryError:
         return {"error": "GPU out of memory - try reducing max_length"}
