@@ -34,28 +34,35 @@ def download_model():
         logger.info(f"Downloading {MODEL_REPO}...")
         
         # Download essential files
-        required_files = [
-            "config.json",
-            "model.safetensors",
-            "tokenizer.json",
-            "tokenizer_config.json",
-            "special_tokens_map.json",
-            "generation_config.json"
-        ]
+        # required_files = [
+        #     "config.json",
+        #     "model.safetensors",
+        #     "tokenizer.json",
+        #     "tokenizer_config.json",
+        #     "special_tokens_map.json",
+        #     "generation_config.json"
+        # ]
 
-        
-        for file in required_files:
-            try:
-                hf_hub_download(
-                    repo_id=MODEL_REPO,
-                    filename=file,
-                    local_dir=LOCAL_MODEL_DIR,
-                    resume_download=True,
-                    token=hf
-                )
-            except Exception as e:
-                logger.warning(f"Couldn't download {file}: {str(e)}")
-                continue  # Skip missing files
+        snapshot_download(
+            repo_id=MODEL_REPO,
+            local_dir=LOCAL_MODEL_DIR,
+            local_dir_use_symlinks=False,
+            resume_download=True,
+            token=hf
+        )
+
+        # for file in required_files:
+        #     try:
+        #         hf_hub_download(
+        #             repo_id=MODEL_REPO,
+        #             filename=file,
+        #             local_dir=LOCAL_MODEL_DIR,
+        #             resume_download=True,
+        #             token=hf
+        #         )
+        #     except Exception as e:
+        #         logger.warning(f"Couldn't download {file}: {str(e)}")
+        #         continue  # Skip missing files
                 
         return LOCAL_MODEL_DIR
     except Exception as e:
