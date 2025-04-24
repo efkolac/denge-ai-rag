@@ -55,6 +55,7 @@ def download_model():
                 )
             except Exception as e:
                 logger.warning(f"Couldn't download {file}: {str(e)}")
+                continue  # Skip missing files
                 
         return LOCAL_MODEL_DIR
     except Exception as e:
