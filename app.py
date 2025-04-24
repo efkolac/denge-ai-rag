@@ -13,9 +13,9 @@ from sentence_transformers import SentenceTransformer, util
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # Model configuration
-MODEL_REPO = "deepseek-ai/deepseek-moe-16b-chat"
+MODEL_REPO = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
-LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/deepseek-moe-16b-chat"
+LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
 hf = "hf_hOpJaCBfzEQSo"
 hf += "EEtQDTotIwMxKOFeVZEVL"
 
