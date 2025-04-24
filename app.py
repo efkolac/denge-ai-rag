@@ -42,6 +42,10 @@ def download_model():
             "special_tokens_map.json",
             "generation_config.json"
         ]
+        hf_token = os.getenv("HF_TOKEN")
+        if(hf_token is None):
+            logger.error("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
+            raise ValueError("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
         
         for file in required_files:
             try:
