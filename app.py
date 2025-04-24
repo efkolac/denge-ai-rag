@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 MODEL_REPO = "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
 LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
-hf = "hf_hOpJaCBfzEQSo"
-hf += "EEtQDTotIwMxKOFeVZEVL"
+hf = "hf_SAzoqialcumI"
+hf += "kbbCplrGbgwBandoXVnTUt"
 
 tokenizer = None
 model = None
@@ -50,8 +50,8 @@ def download_model():
                     repo_id=MODEL_REPO,
                     filename=file,
                     local_dir=LOCAL_MODEL_DIR,
-                    resume_download=True
-                    # token=hf
+                    resume_download=True,
+                    token=hf
                 )
             except Exception as e:
                 logger.warning(f"Couldn't download {file}: {str(e)}")
@@ -84,8 +84,8 @@ def load_model():
             LOCAL_MODEL_DIR,
             torch_dtype=torch.bfloat16,
             device_map="auto",
-            trust_remote_code=True
-            # token= hf
+            trust_remote_code=True,
+            token= hf
         )
         
         logger.info(f"Model loaded on {model.device}")
