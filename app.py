@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 MODEL_REPO = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
 LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
-embed_model = SentenceTransformer("all-MiniLM-L6-v2")
+
 
 tokenizer = None
 model = None
@@ -78,6 +78,8 @@ def load_model():
             raise ValueError("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
         hf = "hf_hOpJaCBfzEQSo"
         hf += "EEtQDTotIwMxKOFeVZEVL"
+        print("*****************hf")
+        print(hf)
         # Load tokenizer
         tokenizer = AutoTokenizer.from_pretrained(
             LOCAL_MODEL_DIR,
@@ -117,7 +119,8 @@ def get_relevant_context(prompt, folder_path, top_k=3):
 
     if not file_data:
         return ""
-
+    embed_model = SentenceTransformer("all-MiniLM-L6-v2",
+                                  token=hf_token)
     # Create embeddings
     prompt_embedding = embed_model.encode(prompt, convert_to_tensor=True)
     passages = [content for _, content in file_data]
