@@ -16,13 +16,13 @@ logger = logging.getLogger(__name__)
 MODEL_REPO = "meta-llama/Llama-3.3-70B-Instruct"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
 LOCAL_MODEL_DIR = MODEL_DIR / "meta-llama/Llama-3.3-70B-Instruct"
-
+hf = "hf_hOpJaCBfzEQSo"
+hf += "EEtQDTotIwMxKOFeVZEVL"
 
 tokenizer = None
 model = None
 
 load_dotenv()
-hf_token = os.getenv("HF_TOKEN")
 
 def download_model():
     """Download the model with retries"""
@@ -51,7 +51,7 @@ def download_model():
                     filename=file,
                     local_dir=LOCAL_MODEL_DIR,
                     resume_download=True,
-                    token=hf_token
+                    token=hf
                 )
             except Exception as e:
                 logger.warning(f"Couldn't download {file}: {str(e)}")
@@ -72,14 +72,7 @@ def load_model():
 
         logger.info("Loading model from local directory...")
 
-        hf_token = os.getenv("HF_TOKEN")
-        if(hf_token is None):
-            logger.error("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
-            raise ValueError("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
-        hf = "hf_hOpJaCBfzEQSo"
-        hf += "EEtQDTotIwMxKOFeVZEVL"
-        print("*****************hf")
-        print(hf)
+
         # Load tokenizer
         tokenizer = AutoTokenizer.from_pretrained(
             LOCAL_MODEL_DIR,
@@ -96,7 +89,6 @@ def load_model():
         )
         
         logger.info(f"Model loaded on {model.device}")
-        logger.info(hf_token)
         return True
 
     except Exception as e:
@@ -120,7 +112,7 @@ def get_relevant_context(prompt, folder_path, top_k=3):
     if not file_data:
         return ""
     embed_model = SentenceTransformer("all-MiniLM-L6-v2",
-                                  token=hf_token)
+                                  token=hf)
     # Create embeddings
     prompt_embedding = embed_model.encode(prompt, convert_to_tensor=True)
     passages = [content for _, content in file_data]
@@ -197,7 +189,7 @@ def handler(event):
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
         response = response.split("[/INST]")[-1].strip()
         
-        return {"response": f"{hf_token} {response}"}
+        return {"response": f"{hf} {response}"}
     
     except torch.cuda.OutOfMemoryError:
         return {"error": "GPU out of memory - try reducing max_length"}
