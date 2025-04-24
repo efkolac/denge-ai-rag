@@ -50,8 +50,8 @@ def download_model():
                     repo_id=MODEL_REPO,
                     filename=file,
                     local_dir=LOCAL_MODEL_DIR,
-                    resume_download=True,
-                    token=hf
+                    resume_download=True
+                    # token=hf
                 )
             except Exception as e:
                 logger.warning(f"Couldn't download {file}: {str(e)}")
@@ -84,8 +84,8 @@ def load_model():
             LOCAL_MODEL_DIR,
             torch_dtype=torch.bfloat16,
             device_map="auto",
-            trust_remote_code=True,
-            token= hf
+            trust_remote_code=True
+            # token= hf
         )
         
         logger.info(f"Model loaded on {model.device}")
