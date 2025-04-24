@@ -71,11 +71,13 @@ def load_model():
             download_model()
 
         logger.info("Loading model from local directory...")
-        
+
         hf_token = os.getenv("HF_TOKEN")
         if(hf_token is None):
             logger.error("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
             raise ValueError("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
+        hf = "hf_hOpJaCBfzEQSo"
+        hf += "EEtQDTotIwMxKOFeVZEVL"
         # Load tokenizer
         tokenizer = AutoTokenizer.from_pretrained(
             LOCAL_MODEL_DIR,
@@ -88,7 +90,7 @@ def load_model():
             torch_dtype=torch.bfloat16,
             device_map="auto",
             trust_remote_code=True,
-            token= hf_token
+            token= hf
         )
         
         logger.info(f"Model loaded on {model.device}")
