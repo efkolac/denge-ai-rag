@@ -7,3 +7,5 @@ pypdf>=3.0.0
 sentence-transformers
 runpod>=0.9.0
 huggingface-hub==0.25.2
+transformers>=4.38.0 
+torch>=2.2.0
