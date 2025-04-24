@@ -1,7 +1,7 @@
 llama-index==0.10.0
 torch==2.7.0
 sentence-transformers==4.1.0
-accelerate==0.25.0
+accelerate==1.6.0
 pypdf>=3.0.0  
 runpod>=1.7.9
 huggingface-hub==0.30.2
