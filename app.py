@@ -118,9 +118,9 @@ def get_relevant_context(prompt, folder_path, top_k=3):
                 file_data.append((file_name, content))
 
     if not file_data:
-        return ""
-    embed_model = SentenceTransformer("all-MiniLM-L6-v2",
-                                  token=hf)
+        return "", []
+
+    embed_model = SentenceTransformer("all-MiniLM-L6-v2", token=hf)
     # Create embeddings
     prompt_embedding = embed_model.encode(prompt, convert_to_tensor=True)
     passages = [content for _, content in file_data]
@@ -130,26 +130,15 @@ def get_relevant_context(prompt, folder_path, top_k=3):
     scores = util.cos_sim(prompt_embedding, passage_embeddings)[0]
     top_results = torch.topk(scores, k=min(top_k, len(file_data)))
 
+    sources = []
     for idx in top_results.indices:
         name, text = file_data[idx]
-        context_chunks.append(f"File: {name}\n{text.strip()}")
+        context_chunks.append(text.strip())
+        sources.append(name)
 
-    return "\n\n".join(context_chunks)
+    return "\n\n".join(context_chunks), sources
 
 def handler(event):
-    """
-    RunPod serverless handler function
-    Expected input format:
-    {
-        "input": {
-            "prompt": "Your question here",
-            "context": "Optional context",
-            "max_length": 2048,
-            "temperature": 0.7,
-            "top_p": 0.9
-        }
-    }
-    """
     try:
         input_data = event.get('input', {})
         
@@ -165,16 +154,17 @@ def handler(event):
         top_p = input_data.get('top_p', 0.9)
         
         folder_path = input_data.get('folder_path', './context_files')  # Default folder
-        filecount=0
+        
         # Read and append files from folder if it exists
         if os.path.exists(folder_path) and os.path.isdir(folder_path):
-            files_context = get_relevant_context(prompt, folder_path)
+            files_context, sources = get_relevant_context(prompt, folder_path)
             if files_context:
                 context = f"{context}\n\n{files_context}" if context else files_context
             else:
                 return {"response": "No relevant context found."}
         else:
-            return {"response":"Böyle bir dosya bulunamadı."}
+            return {"response": "Folder not found."}
+        
         # Format prompt
         if context:
             formatted_prompt = f"<s>[INST]  <context>\n{context}\n</context>\n\n{prompt} [/INST]"
@@ -197,7 +187,10 @@ def handler(event):
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
         response = response.split("[/INST]")[-1].strip()
         
-        return {"response": f"{hf} {response}"}
+        return {
+            "response": response,
+            "sources": sources  # Include the source files in the response
+        }
     
     except torch.cuda.OutOfMemoryError:
         return {"error": "GPU out of memory - try reducing max_length"}

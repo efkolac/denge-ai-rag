@@ -1,0 +1,4 @@
+{
+	"question" : "order with order no 20350330789 is locked, can you unlock it?",
+	"answer" : "make post request to http://terminal.denge.com.tr/ExitSaleOrderDetail with ficheNo parameter taken from user as order no"
+}
