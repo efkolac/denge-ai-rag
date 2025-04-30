@@ -170,9 +170,14 @@ def handler(event):
             formatted_prompt = f"<s>[INST]  <context>\n{context}\n</context>\n\n{prompt} [/INST]"
         else:
             formatted_prompt = f"<s>[INST]  {prompt} [/INST]"
-        
+        text = tokenizer.apply_chat_template(
+            formatted_prompt,
+            tokenize=False,
+            add_generation_prompt=True,
+            enable_thinking=True # Switches between thinking and non-thinking modes. Default is True.
+        )
         # Generate response
-        inputs = tokenizer(formatted_prompt, return_tensors="pt",enable_thinking=True).to(model.device)
+        inputs = tokenizer(text, return_tensors="pt").to(model.device)
         
         with torch.no_grad():
             outputs = model.generate(
