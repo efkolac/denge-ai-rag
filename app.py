@@ -13,9 +13,9 @@ from sentence_transformers import SentenceTransformer, util
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # Model configuration
-MODEL_REPO = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
+MODEL_REPO = "Qwen/Qwen3-32B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
-LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
+LOCAL_MODEL_DIR = MODEL_DIR / "Qwen/Qwen3-32B"
 hf = "hf_SAzoqialcumI"
 hf += "kbbCplrGbgwBandoXVnTUt"
 
@@ -172,7 +172,7 @@ def handler(event):
             formatted_prompt = f"<s>[INST]  {prompt} [/INST]"
         
         # Generate response
-        inputs = tokenizer(formatted_prompt, return_tensors="pt").to(model.device)
+        inputs = tokenizer(formatted_prompt, return_tensors="pt",enable_thinking=True).to(model.device)
         
         with torch.no_grad():
             outputs = model.generate(
