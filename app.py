@@ -13,9 +13,9 @@ from sentence_transformers import SentenceTransformer, util
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # Model configuration
-MODEL_REPO = "Qwen/Qwen3-30B-A3B-FP8"
+MODEL_REPO = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
-LOCAL_MODEL_DIR = MODEL_DIR / "Qwen/Qwen3-30B-A3B-FP8"
+LOCAL_MODEL_DIR = MODEL_DIR / "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
 hf = "hf_SAzoqialcumI"
 hf += "kbbCplrGbgwBandoXVnTUt"
 
