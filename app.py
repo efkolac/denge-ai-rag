@@ -13,9 +13,9 @@ from sentence_transformers import SentenceTransformer, util
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # Model configuration
-MODEL_REPO = "Qwen/Qwen3-0.6B"
+MODEL_REPO = "Qwen/Qwen3-32B"
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/model"))
-LOCAL_MODEL_DIR = MODEL_DIR / "Qwen/Qwen3-0.6B"
+LOCAL_MODEL_DIR = MODEL_DIR / "Qwen/Qwen3-32B"
 hf = "hf_SAzoqialcumI"
 hf += "kbbCplrGbgwBandoXVnTUt"
 
@@ -32,16 +32,6 @@ def download_model():
         LOCAL_MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
         logger.info(f"Downloading {MODEL_REPO}...")
-        
-        # Download essential files
-        # required_files = [
-        #     "config.json",
-        #     "model.safetensors",
-        #     "tokenizer.json",
-        #     "tokenizer_config.json",
-        #     "special_tokens_map.json",
-        #     "generation_config.json"
-        # ]
 
         snapshot_download(
             repo_id=MODEL_REPO,
@@ -50,19 +40,6 @@ def download_model():
             resume_download=True,
             token=hf
         )
-
-        # for file in required_files:
-        #     try:
-        #         hf_hub_download(
-        #             repo_id=MODEL_REPO,
-        #             filename=file,
-        #             local_dir=LOCAL_MODEL_DIR,
-        #             resume_download=True,
-        #             token=hf
-        #         )
-        #     except Exception as e:
-        #         logger.warning(f"Couldn't download {file}: {str(e)}")
-        #         continue  # Skip missing files
                 
         return LOCAL_MODEL_DIR
     except Exception as e:
@@ -121,18 +98,6 @@ def handler(event):
         max_length = input_data.get('max_length', 2048)
         temperature = input_data.get('temperature', 0.7)
         top_p = input_data.get('top_p', 0.9)
-        
-        # folder_path = input_data.get('folder_path', './context_files')  # Default folder
-        
-        # Read and append files from folder if it exists
-        # if os.path.exists(folder_path) and os.path.isdir(folder_path):
-        #     files_context, sources = get_relevant_context(prompt, folder_path)
-        #     if files_context:
-        #         context = f"{context}\n\n{files_context}" if context else files_context
-        #     else:
-        #         return {"response": "No relevant context found."}
-        # else:
-        #     return {"response": "Folder not found."}
         
         # Format prompt
         tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO)
