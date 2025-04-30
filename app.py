@@ -143,7 +143,6 @@ def handler(event):
         )
 
         # prepare the model input
-        prompt = "Give me a short introduction to large language model."
         messages = [
             {"role": "user", "content": prompt}
         ]
