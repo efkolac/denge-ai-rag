@@ -106,37 +106,6 @@ def load_model():
 # Load model when the container starts
 load_model()
 
-def get_relevant_context(prompt, folder_path, top_k=3):
-    context_chunks = []
-    file_data = []
-
-    for file_name in os.listdir(folder_path):
-        file_path = Path(folder_path) / file_name
-        if file_path.is_file():
-            with open(file_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-                file_data.append((file_name, content))
-
-    if not file_data:
-        return "", []
-
-    embed_model = SentenceTransformer("all-MiniLM-L6-v2", token=hf)
-    # Create embeddings
-    prompt_embedding = embed_model.encode(prompt, convert_to_tensor=True)
-    passages = [content for _, content in file_data]
-    passage_embeddings = embed_model.encode(passages, convert_to_tensor=True)
-
-    # Semantic similarity
-    scores = util.cos_sim(prompt_embedding, passage_embeddings)[0]
-    top_results = torch.topk(scores, k=min(top_k, len(file_data)))
-
-    sources = []
-    for idx in top_results.indices:
-        name, text = file_data[idx]
-        context_chunks.append(text.strip())
-        sources.append(name)
-
-    return "\n\n".join(context_chunks), sources
 
 def handler(event):
     try:
@@ -166,14 +135,15 @@ def handler(event):
         #     return {"response": "Folder not found."}
         
         # Format prompt
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO)
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModelForCausalLM.from_pretrained(
-            MODEL_REPO,
+            model_name,
             torch_dtype="auto",
             device_map="auto"
         )
 
         # prepare the model input
+        prompt = "Give me a short introduction to large language model."
         messages = [
             {"role": "user", "content": prompt}
         ]
@@ -185,6 +155,24 @@ def handler(event):
         )
         model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
 
+        # conduct text completion
+        generated_ids = model.generate(
+            **model_inputs,
+            max_new_tokens=32768
+        )
+        output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist() 
+
+        try:
+    # rindex finding 151668 (</think>)
+            index = len(output_ids) - output_ids[::-1].index(151668)
+        except ValueError:
+            index = 0
+
+        thinking_content = tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip("\n")
+        content = tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
+
+        print("thinking content:", thinking_content)
+        print("content:", content)
         # conduct text completion
         # generated_ids = model.generate(
         #     **model_inputs,
@@ -204,21 +192,21 @@ def handler(event):
         # Generate response
         # inputs = tokenizer(text, return_tensors="pt").to(model.device)
         
-        with torch.no_grad():
-            outputs = model.generate(
-                **model_inputs,
-                max_length=max_length,
-                temperature=temperature,
-                top_p=top_p,
-                do_sample=True
-            )
+        # with torch.no_grad():
+        #     outputs = model.generate(
+        #         **model_inputs,
+        #         max_length=max_length,
+        #         temperature=temperature,
+        #         top_p=top_p,
+        #         do_sample=True
+        #     )
         
-        # Decode and clean response
-        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        response = response.split("[/INST]")[-1].strip()
+        # # Decode and clean response
+        # response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        # response = response.split("[/INST]")[-1].strip()
         
         return {
-            "response": response
+            "response": content
             # "sources": sources  # Include the source files in the response
         }
     
