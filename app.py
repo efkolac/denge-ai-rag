@@ -135,9 +135,9 @@ def handler(event):
         #     return {"response": "Folder not found."}
         
         # Format prompt
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO)
         model = AutoModelForCausalLM.from_pretrained(
-            model_name,
+            MODEL_REPO,
             torch_dtype="auto",
             device_map="auto"
         )
