@@ -166,22 +166,47 @@ def handler(event):
         #     return {"response": "Folder not found."}
         
         # Format prompt
-        if context:
-            formatted_prompt = f"<s>[INST]  <context>\n{context}\n</context>\n\n{prompt} [/INST]"
-        else:
-            formatted_prompt = f"<s>[INST]  {prompt} [/INST]"
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO)
+        model = AutoModelForCausalLM.from_pretrained(
+            MODEL_REPO,
+            torch_dtype="auto",
+            device_map="auto"
+        )
+
+        # prepare the model input
+        messages = [
+            {"role": "user", "content": prompt}
+        ]
         text = tokenizer.apply_chat_template(
-            formatted_prompt,
+            messages,
             tokenize=False,
             add_generation_prompt=True,
             enable_thinking=True # Switches between thinking and non-thinking modes. Default is True.
         )
+        model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
+
+        # conduct text completion
+        # generated_ids = model.generate(
+        #     **model_inputs,
+        #     max_new_tokens=32768
+        # )
+        # output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
+        # if context:
+        #     formatted_prompt = f"<s>[INST]  <context>\n{context}\n</context>\n\n{prompt} [/INST]"
+        # else:
+        #     formatted_prompt = f"<s>[INST]  {prompt} [/INST]"
+        # text = tokenizer.apply_chat_template(
+        #     formatted_prompt,
+        #     tokenize=False,
+        #     add_generation_prompt=True,
+        #     enable_thinking=True # Switches between thinking and non-thinking modes. Default is True.
+        # )
         # Generate response
-        inputs = tokenizer(text, return_tensors="pt").to(model.device)
+        # inputs = tokenizer(text, return_tensors="pt").to(model.device)
         
         with torch.no_grad():
             outputs = model.generate(
-                **inputs,
+                **model_inputs,
                 max_length=max_length,
                 temperature=temperature,
                 top_p=top_p,
