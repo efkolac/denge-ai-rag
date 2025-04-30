@@ -153,17 +153,17 @@ def handler(event):
         temperature = input_data.get('temperature', 0.7)
         top_p = input_data.get('top_p', 0.9)
         
-        folder_path = input_data.get('folder_path', './context_files')  # Default folder
+        # folder_path = input_data.get('folder_path', './context_files')  # Default folder
         
         # Read and append files from folder if it exists
-        if os.path.exists(folder_path) and os.path.isdir(folder_path):
-            files_context, sources = get_relevant_context(prompt, folder_path)
-            if files_context:
-                context = f"{context}\n\n{files_context}" if context else files_context
-            else:
-                return {"response": "No relevant context found."}
-        else:
-            return {"response": "Folder not found."}
+        # if os.path.exists(folder_path) and os.path.isdir(folder_path):
+        #     files_context, sources = get_relevant_context(prompt, folder_path)
+        #     if files_context:
+        #         context = f"{context}\n\n{files_context}" if context else files_context
+        #     else:
+        #         return {"response": "No relevant context found."}
+        # else:
+        #     return {"response": "Folder not found."}
         
         # Format prompt
         if context:
@@ -188,8 +188,8 @@ def handler(event):
         response = response.split("[/INST]")[-1].strip()
         
         return {
-            "response": response,
-            "sources": sources  # Include the source files in the response
+            "response": response
+            # "sources": sources  # Include the source files in the response
         }
     
     except torch.cuda.OutOfMemoryError:
